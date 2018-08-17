@@ -20,7 +20,7 @@ connection.connect(err => {
     }
 })
 
-console.log(connection);
+//console.log(connection);
 
 app.use(cors());
 
@@ -28,8 +28,32 @@ app.get('/', (req,res) => {
     res.send('go to /products to see products');
 });
 
-app.get('/products', (req,res) => {
+app.get('/products/add', (req,res) => {
+    const {name, price} = req.query;
+    const INSERT_PRODUCTS_QUERY = `INSERT INTO products (name,price) VALUES('${name}', ${price})`;
+    connection.query(INSERT_PRODUCTS_QUERY, (err,results) => {
+        if(err){
+            return res.send(err)
+        }
+        else {
+            return res.send('successfully added product')
+        }
+    });
+    res.send('adding product');
+});
 
+app.get('/products', (req,res) => {
+    connection.query(SELECT_ALL_PRODUCTS_QUERY, (err, results) => {
+        if(err){
+            return res.send(err);
+        }
+        else {
+            return res.json({
+                data: results
+            })
+        }
+
+    });
 });
 
 app.listen(4000, () => {
