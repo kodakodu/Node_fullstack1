@@ -20,6 +20,7 @@ connection.connect(err => {
     }
 })
 
+
 //console.log(connection);
 
 app.use(cors());
@@ -39,7 +40,7 @@ app.get('/products/add', (req,res) => {
             return res.send('successfully added product')
         }
     });
-    res.send('adding product');
+    //res.send('adding product');
 });
 
 app.get('/products', (req,res) => {
